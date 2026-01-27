@@ -1,0 +1,12 @@
+enum Complexity{
+    simple
+    moderate
+    high
+}
+
+enum TargetCategory{
+    edge_case
+    happy_path
+    adversarial
+    other
+}

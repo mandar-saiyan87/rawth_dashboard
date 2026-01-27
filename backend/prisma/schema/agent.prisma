@@ -1,0 +1,6 @@
+model Agent {
+    id String @id  @default(uuid())
+    name String
+    scenarios Scenario[]
+    createdAt DateTime @default(now())
+}
