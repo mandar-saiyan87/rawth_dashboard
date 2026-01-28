@@ -32,6 +32,7 @@ function Scenario({ setView }) {
 
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/agents/${agentId}/scenarios?page=${page}&limit=${limit}`)
 
+
       if (!res.ok) {
         throw new Error(`HTTP error: ${res.status}`)
       }
@@ -46,6 +47,7 @@ function Scenario({ setView }) {
       setError(null)
     } catch (error) {
       console.error(error)
+      setScenarios([])
       setError('Failed to fetch scenarios, Please try again')
     } finally {
       setLoading(false)

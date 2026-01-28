@@ -1,5 +1,6 @@
 import React from 'react'
 import Appimages from '../../assets/images/images'
+import { format } from "date-fns";
 
 function ScenarioCard({ scenario, onDelete }) {
 
@@ -13,6 +14,8 @@ function ScenarioCard({ scenario, onDelete }) {
     onDelete(id);
   }
 
+
+
   const complexityColor = () => {
     switch (scenario.complexity) {
       case 'simple':
@@ -25,6 +28,8 @@ function ScenarioCard({ scenario, onDelete }) {
         return 'bg-gray-100 text-gray-800';
     }
   };
+
+  // const formatedDate = new format(new Date(scenario?.createdAt), 'dd-MM-yyyy');
 
   function truncatetext(str, maxLength) {
     if (str.length > maxLength) {
