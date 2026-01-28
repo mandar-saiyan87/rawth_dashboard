@@ -6,7 +6,9 @@ function CreateScenario({ setView }) {
 
 
   return (
-    <></>
+    <div>
+      Create Scenario
+    </div>
   )
 }
 
