@@ -64,6 +64,27 @@ router.post('/agents/:agentId/scenarios', async (req, res) => {
     }
 })
 
+router.get('/scenario/:id', async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const scenario = await prisma.scenario.findUnique({
+            where: {
+                id
+            }
+        })
+
+        if (!scenario) {
+            return res.status(404).json({ message: 'Scenario not found' })
+        }
+
+        return res.status(200).json(scenario)
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({ message: 'Internal server error' })
+    }
+})
+
 
 
 
