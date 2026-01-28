@@ -86,6 +86,77 @@ router.get('/scenario/:id', async (req, res) => {
 })
 
 
+router.get('/agents/:agentId/scenarios', async (req, res) => {
+    const { agentId } = req.params
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 20
+    const skip = (page - 1) * limit
+
+    try {
+        const agentExist = await prisma.agent.findUnique({
+            where: {
+                id: agentId
+            }
+        })
+
+        if (!agentExist) {
+            return res.status(404).json({ message: 'Agent not found' })
+        }
+
+        const scenarios = await prisma.scenario.findMany({
+            where: {
+                agentId
+            },
+            orderBy: { createdAt: 'desc' },
+            skip,
+            take: limit
+        })
+
+        const pageDetails = await prisma.scenario.count({
+            where: {
+                agentId
+            }
+        })
+
+        const pagination = {
+            page, pageDetails, totalPages: Math.ceil(pageDetails / limit)
+        }
+
+        return res.status(200).json({
+            pagination, scenarios
+        })
+
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({ message: 'Internal server error' })
+    }
+
+
+})
+
+router.delete('/scenario/:id', async (req, res) => {
+    const { id } = req.params
+
+    try {
+        await prisma.scenario.delete({
+            where: {
+                id
+            }
+        })
+
+        return res.status(200).json({ message: 'Scenario deleted successfully' })
+    } catch (error) {
+        console.error(error)
+
+        if (error.code === 'P2025') {
+            return res.status(404).json({ message: 'Scenario not found' })
+        }
+
+        return res.status(500).json({ message: 'Internal server error' })
+    }
+})
+
+
 
 
 
