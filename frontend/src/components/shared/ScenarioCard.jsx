@@ -1,6 +1,6 @@
 import React from 'react'
 import Appimages from '../../assets/images/images'
-import { format } from "date-fns";
+
 
 function ScenarioCard({ scenario, onDelete }) {
 
@@ -14,6 +14,16 @@ function ScenarioCard({ scenario, onDelete }) {
     onDelete(id);
   }
 
+
+  function formatDate(dateString) {
+    const date = new Date(dateString)
+
+    const day = String(date.getDate()).padStart(2, '0')
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const year = date.getFullYear()
+
+    return `${day}-${month}-${year}`
+  }
 
 
   const complexityColor = () => {
@@ -29,7 +39,7 @@ function ScenarioCard({ scenario, onDelete }) {
     }
   };
 
-  // const formatedDate = new format(new Date(scenario?.createdAt), 'dd-MM-yyyy');
+
 
   function truncatetext(str, maxLength) {
     if (str.length > maxLength) {
@@ -49,7 +59,9 @@ function ScenarioCard({ scenario, onDelete }) {
       </div>
       <p className='text-slate-400 truncate'>{shorttext}</p>
       <hr className='h-px bg-slate-300 border-0 my-5' />
-      <p>{scenario.createdAt}</p>
+      <p className="text-sm text-slate-500">
+        Created on: {formatDate(scenario.createdAt)}
+      </p>
       <div className='flex items-center justify-start gap-x-5 my-5'>
         <button className='bg-slate-200 cursor-pointer p-4 rounded-lg text-slate-500 text-sm'>View</button>
         <button className='cursor-pointer' onClick={() => handleOnDelete(scenario.id)}><Appimages.Deleteimg className="text-red-600" /></button>
