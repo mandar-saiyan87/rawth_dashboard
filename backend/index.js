@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from "cors"
+import scenariorouter from './src/routes/scenario.routes.js'
 
 const app = express()
 app.use(cors())
@@ -12,6 +13,8 @@ app.get('/status', (req, res) => {
         status: "ok"
     })
 })
+
+app.use('/api', scenariorouter)
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`)
